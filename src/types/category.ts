@@ -7,6 +7,8 @@ export interface Category {
     updatedAt: string;
 }
 
+export type CategoryTree = Category;
+
 export interface BreadcrumbItem {
     id: number;
     name: string;
