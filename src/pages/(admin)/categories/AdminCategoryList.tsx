@@ -124,7 +124,7 @@ const AdminCategoryList = () => {
 
                         {/* 2차 카테고리 목록 (Table) */}
                         <div className="flex-1 p-0">
-                            {parent.children.length > 0 ? (
+                            {parent.children?.length > 0 ? (
                                 <div className="overflow-x-auto">
                                     <table className="w-full text-sm text-left">
                                         <thead className="text-xs text-gray-500 uppercase bg-white border-b border-gray-100">
@@ -141,7 +141,7 @@ const AdminCategoryList = () => {
                                             </tr>
                                         </thead>
                                         <tbody className="divide-y divide-gray-50">
-                                            {parent.children.map(child => (
+                                            {parent.children?.map(child => (
                                                 <tr
                                                     key={child.id}
                                                     className="hover:bg-gray-50 transition-colors">
