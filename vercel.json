@@ -1,0 +1,12 @@
+{
+    "rewrites": [
+        {
+            "source": "/proxy/:path*",
+            "destination": "http://49.247.30.225:4001/api*"
+        },
+        {
+            "source": "/(.*)",
+            "destination": "/index.html"
+        }
+    ]
+}
