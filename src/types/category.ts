@@ -5,6 +5,7 @@ export interface Category {
     parentId: number | null;
     createdAt: string;
     updatedAt: string;
+    children?: Category[];
 }
 
 export type CategoryTree = Category;
