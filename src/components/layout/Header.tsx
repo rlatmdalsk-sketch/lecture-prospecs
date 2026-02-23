@@ -8,7 +8,7 @@ import useAuthStore from "../../store/useAuthStore.ts";
 const GNB_MENU = [
     {
         name: "RUNNING",
-        path: "",
+        path: "/category/6",
         subMenus: [
             { name: "신발", path: "/category/6" },
             { name: "의류", path: "/running/clothing" },
@@ -149,7 +149,7 @@ const Header = () => {
                     </div>
                     {isLoggedIn ? (
                         <div className="items-center gap-3 hidden md:flex">
-                            <Link to={"/my"} className={twMerge(["text-sm", "font-bold"])}>
+                            <Link to={"/my/orders"} className={twMerge(["text-sm", "font-bold"])}>
                                 MYPAGE
                             </Link>
                             <button

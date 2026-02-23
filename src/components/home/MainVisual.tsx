@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay, Pagination, Navigation, Controller, EffectFade } from "swiper/modules";
+import { Autoplay, Pagination,  Controller, EffectFade } from "swiper/modules";
 import type { Swiper as SwiperType } from "swiper";
 import "swiper/css";
 import "swiper/css/pagination";
@@ -69,9 +69,12 @@ const MainVisual = () => {
                     autoplay={{ delay: 4000, disableOnInteraction: false }}
                     pagination={{ clickable: true }}
                     navigation={true}
-                    modules={[Autoplay, Pagination, Navigation, Controller]}
+                    modules={[Autoplay, Pagination,Controller]}
                     // 이미지 슬라이더 스타일
-                    className="h-full w-full [&_.swiper-pagination-bullet-active]:bg-red-600 [&_.swiper-pagination-bullet]:w-3 [&_.swiper-pagination-bullet]:h-3">
+                    className="h-full w-full [&_.swiper-pagination-bullet-active]:!bg-white [&_.swiper-pagination-bullet]:!w-30 [&_.swiper-pagination-bullet]:!h-1
+                    [&_.swiper-pagination-bullet]:!rounded-none
+
+                    ">
                     {SLIDES.map(slide => (
                         <SwiperSlide key={slide.id}>
                             <div

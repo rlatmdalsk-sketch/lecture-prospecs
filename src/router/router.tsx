@@ -4,74 +4,85 @@ import Home from "../pages/Home.tsx";
 import Register from "../pages/Register.tsx";
 import Login from "../pages/Login.tsx";
 import useAuthStore from "../store/useAuthStore.ts";
+
+// Admin & Shop Pages
 import AdminLayout from "../layouts/AdminLayout.tsx";
 import AdminCategoryList from "../pages/(admin)/categories/AdminCategoryList.tsx";
 import AdminProductList from "../pages/(admin)/products/AdminProductList.tsx";
 import AdminProductNew from "../pages/(admin)/products/AdminProductNew.tsx";
 import AdminProductEdit from "../pages/(admin)/products/adminProductEdit.tsx";
+
 import ProductListPage from "../pages/(shop)/ProductListPage.tsx";
 import ProductDetailPage from "../pages/(shop)/ProductDetailPage.tsx";
 import CartPage from "../pages/(shop)/CartPage.tsx";
 import OrderPage from "../pages/(shop)/OrderPage.tsx";
 import OrderSuccessPage from "../pages/(shop)/OrderSuccessPage.tsx";
 import OrderFailPage from "../pages/(shop)/OrderFailPage.tsx";
-import MyDashboard from "../pages/(shop)/MyDashboard.tsx";
+
 import MyLayout from "../layouts/MyLayout.tsx";
+import MyDashboard from "../pages/(shop)/MyDashboard.tsx";
 import MyOrderList from "../pages/(shop)/MyOrderList.tsx";
 import MyOrderDetail from "../pages/(shop)/MyOrderDetail.tsx";
 import MyReviewList from "../pages/(shop)/MyReviewList.tsx";
 import MyInquiryList from "../pages/(shop)/MyInquiryList.tsx";
 import MyInquiryWrite from "../pages/(shop)/MyInquiryWrite.tsx";
 
+// Loader: 로그인한 사용자는 접근 불가 (로그인/회원가입)
 const guestOnlyLoader = () => {
-    // useAuthStore는 훅이라 리액트 컴포넌트에서만 사용 가능함.
-    // 이외의 장소에서 사용하기 위해서는 getState()를 통해 사용 해야 함.
     const isLoggedIn = useAuthStore.getState().isLoggedIn;
-    if (isLoggedIn) {
-        return redirect("/");
-    }
-
+    if (isLoggedIn) return redirect("/");
     return null;
 };
 
+// Loader: 관리자만 접근 가능
 const adminOnlyLoader = () => {
     const { isLoggedIn, user } = useAuthStore.getState();
-
-    // 1단계: 로그인이 안 되어 있으면 로그인 페이지로 보냄
     if (!isLoggedIn) {
         alert("로그인이 필요합니다.");
         return redirect("/login");
     }
-
-    // 2단계: 로그인은 됐는데 ADMIN이 아니면 홈으로 튕겨냄
     if (user?.role !== "ADMIN") {
-        alert("관리자 접근 권한이 없습니다.");
+        alert("관리자 권한이 없습니다.");
         return redirect("/");
     }
-
-    // 통과
     return null;
 };
 
 const router = createBrowserRouter([
     {
-        path: "",
+        path: "/",
         element: <Layout />,
         children: [
             { index: true, element: <Home /> },
             { path: "login", element: <Login />, loader: guestOnlyLoader },
             { path: "register", element: <Register />, loader: guestOnlyLoader },
             { path: "cart", element: <CartPage /> },
+
+            /* --- Shop Category Routes (GNB와 연동) --- */
+            // ID 기반 카테고리 (예: /category/6)
+            { path: "category/:id", element: <ProductListPage /> },
+            // 경로 기반 카테고리 (예: /running/shoes, /sports-style)
+            { path: "running/:sub?", element: <ProductListPage /> },
+            { path: "sports-style/:sub?", element: <ProductListPage /> },
+            { path: "heritage/:sub?", element: <ProductListPage /> },
+            { path: "sports/:sub?", element: <ProductListPage /> },
+            { path: "onespec", element: <ProductListPage /> },
+            { path: "story/:sub?", element: <ProductListPage /> },
+
+            /* --- Product Detail --- */
+            { path: "product/:id", element: <ProductDetailPage /> },
+
+            /* --- Order Process --- */
             {
                 path: "order",
                 children: [
-                    { index: true, element: <OrderPage /> }, // /order
-                    { path: "success", element: <OrderSuccessPage /> }, // /order/success
-                    { path: "fail", element: <OrderFailPage /> }, // /order/fail
+                    { index: true, element: <OrderPage /> },
+                    { path: "success", element: <OrderSuccessPage /> },
+                    { path: "fail", element: <OrderFailPage /> },
                 ],
             },
-            { path: "category/:id", element: <ProductListPage /> },
-            { path: "product/:id", element: <ProductDetailPage /> },
+
+            /* --- My Page (Nested Layout) --- */
             {
                 path: "my",
                 element: <MyLayout />,
@@ -81,13 +92,10 @@ const router = createBrowserRouter([
                         path: "orders",
                         children: [
                             { index: true, element: <MyOrderList /> },
-                            {
-                                path: ":id",
-                                element: <MyOrderDetail />,
-                            },
+                            { path: ":id", element: <MyOrderDetail /> },
                         ],
                     },
-                    { path: "reviews", children: [{ index: true, element: <MyReviewList /> }] },
+                    { path: "reviews", element: <MyReviewList /> },
                     {
                         path: "inquiry",
                         children: [
@@ -99,12 +107,14 @@ const router = createBrowserRouter([
             },
         ],
     },
+
+    /* --- Admin Routes --- */
     {
         path: "/admin",
         element: <AdminLayout />,
         loader: adminOnlyLoader,
         children: [
-            { index: true, element: <div></div> },
+            { index: true, element: <AdminProductList /> }, // 기본 페이지를 상품 목록으로
             { path: "categories", element: <AdminCategoryList /> },
             { path: "products", element: <AdminProductList /> },
             { path: "products/new", element: <AdminProductNew /> },
