@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { useForm, useFieldArray, Controller } from "react-hook-form";
 import { useNavigate } from "react-router";
 import { AxiosError } from "axios";
-import type { CategoryTree } from "../../../types/category.ts";
 import { getAdminCategories } from "../../../api/admin.category.api.ts";
 import Input from "../../../components/common/Input.tsx";
 import Button from "../../../components/common/Button.tsx";
@@ -10,6 +9,8 @@ import ColorFormItem from "../../../components/common/ColorFormItem.tsx";
 import { createAdminProduct, type CreateProductRequest } from "../../../api/admin.product.api.ts";
 import Editor from "../../../components/common/Editor";
 import { FILTER_GENDERS, FILTER_STYLES } from "../../../constants/filter.const"; // 분리한 컴포넌트
+
+
 
 // 폼 데이터 타입 정의 (중첩 구조)
 export interface CreateProductForm extends Omit<CreateProductRequest, "colors"> {
@@ -29,7 +30,7 @@ export interface CreateProductForm extends Omit<CreateProductRequest, "colors"> 
 
 const AdminProductNew = () => {
     const navigate = useNavigate();
-    const [categories, setCategories] = useState<CategoryTree[]>([]);
+    const [categories, setCategories] = useState<any[]>([]);
 
     // Hook Form 초기화
     const {
