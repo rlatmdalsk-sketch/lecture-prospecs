@@ -124,7 +124,7 @@ const OrderSuccessPage = () => {
                     쇼핑 계속하기
                 </Button>
                 <Button
-                    onClick={() => navigate("/mypage/orders")} // 마이페이지 주문내역으로 이동
+                    onClick={() => navigate("/my/orders")} // 마이페이지 주문내역으로 이동
                 >
                     주문 상세보기
                 </Button>

@@ -89,7 +89,7 @@ const MyReviewList = () => {
                 <div className="py-20 text-center bg-gray-50 border border-gray-100 rounded-sm">
                     <p className="text-gray-500 mb-4">작성한 리뷰가 없습니다.</p>
                     <button
-                        onClick={() => navigate("/my-orders")}
+                        onClick={() => navigate("/my/orders")}
                         className="text-sm text-black underline hover:text-gray-600 font-medium">
                         구매 내역에서 리뷰 작성하기
                     </button>
