@@ -12,10 +12,11 @@ const NOTICES = [
 
 const TopBanner = () => {
     const { isTopBannerVisible, hideTopBanner, topBannerHeight } = useLayoutStore();
+
     if (!isTopBannerVisible) return null;
 
     return (
-        <div className="fixed top-0 left-0 right-0 z-[60]">
+        <div className="fixed top-0 left-0 right-0 z-50">
             <div
                 className="relative bg-black text-white flex items-center justify-center overflow-hidden transition-all duration-300"
                 style={{ height: `${topBannerHeight}px` }}>
@@ -36,9 +37,9 @@ const TopBanner = () => {
 
                 <button
                     onClick={hideTopBanner}
-                    className="absolute right-4 text-white text-lg p-1"
+                    className="absolute right-4 z-10 flex items-center justify-center text-white hover:opacity-70 transition-opacity"
                     aria-label="Close Top Banner">
-                    <IoClose />
+                    <IoClose size={20} />
                 </button>
             </div>
         </div>
